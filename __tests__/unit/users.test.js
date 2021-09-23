@@ -22,7 +22,7 @@ describe("Probando los servicios de usuarios", () => {
         }
     });
 
-    beforeAll(async() => {
+    beforeAll( async () => {
         userCreated = await userService.create(newUser);
       });    
 
@@ -50,7 +50,7 @@ describe("Probando los servicios de usuarios", () => {
             firstname: "Felipe",
             lastname: "Gutierrez",
             email: "felipe.gtz@email.com",
-            password: "felipe12345",
+            password: "felipe12",
             phone: "5513498679"
         };
         // Act
