@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/server.js",
     "dev": "nodemon ./src/server.js",
-    "test": "jest"
+    "test": "jest --verbose --detectOpenHandles"
   },
   "author": "Ricardo Gutierrez",
   "license": "ISC",
@@ -17,9 +17,12 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "faker": "^5.5.3",
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "sequelize-auto": "^0.8.4",
+    "swagger-ui-express": "^4.1.6"
   }
 }

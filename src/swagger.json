@@ -1,0 +1,108 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Mi primera API",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:9000/api/v1",
+        "description": "dev server"
+      },
+      {
+        "url": "https://miapp.com/api/v1",
+        "description": "prod server"
+      }
+    ],
+    "paths": {
+      "/users": {
+        "get": {
+          "description": "Obtener los usuarios del sistema",
+          "responses": {
+            "200": {
+              "description": "Obtener una lista de usuarios"
+            }
+          }
+        },
+        "post": {
+          "description": "Agregar un usuario en el sistema",
+          "responses": {
+            "201": {
+              "description": "Se ha creado satisfactoriamente un usuario en el sistema"
+            }
+          },
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "put": {
+          "description": "Actualizar un usuario en el sistema",
+          "responses": {
+            "200": {
+              "description": "Se ha actualizado satisfactoriamente un usuario en el sistema"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "El id del usuario a actualizar",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "user": {
+          "type": "object",
+          "required": ["firstname", "lastname", "email", "password", "phone"],
+          "properties": {
+            "firstname": {
+              "type": "string"
+            },
+            "lastname": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string",
+              "description": "Una contraseña de 8 caracteres como longitud minima"
+            },
+            "profile_image": {
+              "type": "string",
+              "example": "https://i.stack.imgur.com/h1SaI.png"
+            }, 
+            "phone": {
+              "type": "string",
+              "format": "+52(###)#######"
+            }
+          }
+        }
+      }
+    }
+  }
+  
