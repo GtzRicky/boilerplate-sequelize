@@ -17,6 +17,7 @@
     "paths": {
       "/users": {
         "get": {
+          "tags": ["users"],
           "description": "Obtener los usuarios del sistema",
           "responses": {
             "200": {
@@ -25,6 +26,7 @@
           }
         },
         "post": {
+          "tags": ["users"],
           "description": "Agregar un usuario en el sistema",
           "responses": {
             "201": {
@@ -44,6 +46,7 @@
       },
       "/users/{id}": {
         "put": {
+          "tags": ["users"],
           "description": "Actualizar un usuario en el sistema",
           "responses": {
             "200": {
@@ -68,6 +71,17 @@
                   "$ref": "#/components/schemas/user"
                 }
               }
+            }
+          }
+        }
+      },
+      "/conversations": {
+        "get": {
+          "tags": ["conversations"],
+          "description": "Obtener las conversaciones del sistema",
+          "responses": {
+            "200": {
+              "description": "Obtener una lista de conversaciones"
             }
           }
         }
