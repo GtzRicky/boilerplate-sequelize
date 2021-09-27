@@ -1,4 +1,4 @@
-const ConversationService = require("../services/conversations.services.js");
+const ConversationService = require("../services/conversations.services");
 
 const getAllConversations = async (req, res, next) => {
     try {

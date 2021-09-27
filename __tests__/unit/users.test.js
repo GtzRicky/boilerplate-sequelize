@@ -35,7 +35,7 @@ describe("Probando los servicios de usuarios", () => {
         expect(results).toEqual(expect.any(Array));
     });
 
-    it("Debería obtener un objeto al llamar el método geyById", async () => {
+    it("Debería obtener un objeto al llamar el método getById", async () => {
         //Arrange
         const id = 13;
         // Act

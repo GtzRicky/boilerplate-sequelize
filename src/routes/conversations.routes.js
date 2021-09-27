@@ -9,7 +9,7 @@ const {
     conversationUsers,
     conversationParticipants,
     conversationMessages
-} = require("../controllers/conversations.controller.js");
+} = require("../controllers/conversations.controller");
 
 const router = Router();
 
