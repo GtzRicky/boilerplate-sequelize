@@ -1,9 +1,14 @@
 const Sequelize = require('sequelize');
+const bcrypt = require("bcryptjs");
+
 module.exports = (sequelize, DataTypes) => {
   return users.init(sequelize, DataTypes);
 }
 
 class users extends Sequelize.Model {
+  static associate(models) {
+    users.hasMany(models.participants, { as: "participants", foreignKey: "user_id" });
+  }
   static init(sequelize, DataTypes) {
   super.init({
     id: {
@@ -52,6 +57,13 @@ class users extends Sequelize.Model {
     sequelize,
     tableName: 'users',
     schema: 'public',
+    hooks: {
+      beforeCreate: (user, options) => {
+        // Cada vez que inserte un usuarui en la DB vamos a encriptar la contraseña
+        const hash = bcrypt.hashSync(user.password, 8);
+        user.password = hash;
+      }
+    },
     timestamps: false,
     indexes: [
       {
