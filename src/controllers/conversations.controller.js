@@ -103,6 +103,30 @@ const conversationMessages = async (req, res, next) => {
     }
 };
 
+const conversationsFromUser = async (req, res, next) => {
+    try {
+        const { id: userId } = req.params;
+
+        let conversations = await ConversationService.getConversationsFromUser(userId);
+        res.json(conversations)
+    } catch (error) {
+        next(error);
+    }
+};
+
+const postMessage = async (req, res, next) => {
+    try {
+        const { id: sender_id } = req.user;
+        const { id: conversation_id } = req.params;
+        const { message } = req.body;
+
+        let result = await ConversationService.sendMessage(sender_id, conversation_id, message);
+        res.status(201).json(result);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     getAllConversations,
     getConversationById,
@@ -111,5 +135,7 @@ module.exports = {
     deleteConversation,
     conversationUsers,
     conversationParticipants,
-    conversationMessages
+    conversationMessages,
+    conversationsFromUser,
+    postMessage
 }

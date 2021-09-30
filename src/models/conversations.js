@@ -4,6 +4,11 @@ module.exports = (sequelize, DataTypes) => {
 }
 
 class conversations extends Sequelize.Model {
+
+  static associate(models) {
+    conversations.hasMany(models.participants, { as: "participants", foreignKey: "conversation_id"});
+  }
+
   static init(sequelize, DataTypes) {
   super.init({
     id: {

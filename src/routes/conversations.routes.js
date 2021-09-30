@@ -8,27 +8,34 @@ const {
     deleteConversation,
     conversationUsers,
     conversationParticipants,
-    conversationMessages
+    conversationMessages,
+    postMessage
 } = require("../controllers/conversations.controller");
+
+const { validateToken } = require("../middlewares/auth.middleware");
 
 const router = Router();
 
-router.get("/conversations", getAllConversations);
+router.get("/conversations", validateToken, getAllConversations);
 
-router.get("/conversations/:id", getConversationById);
+router.get("/conversations/:id", validateToken, etConversationById);
 
-router.post("/conversations", createConversation);
+router.post("/conversations", validateToken, createConversation);
 
-router.put("/conversations/:id", updateConversation);
+router.put("/conversations/:id", validateToken, updateConversation);
 
-router.delete("/conversations/:id", deleteConversation);
+router.delete("/conversations/:id", validateToken, deleteConversation);
 
 // Relaciones con otros modelos
 
-router.get("/conversations/:id/users", conversationUsers);
+router.get("/conversations/:id/users", validateToken, conversationUsers);
 
-router.get("/conversations/:id/participants", conversationParticipants);
+router.get("/conversations/:id/participants", validateToken, conversationParticipants);
 
-router.get("/conversations/:id/messages", conversationMessages);
+router.delete("/conversations/:id/participants");
+
+router.get("/conversations/:id/messages", validateToken, conversationMessages);
+
+router.post("/conversations/:id/messages", validateToken, postMessage);
 
 module.exports = router;

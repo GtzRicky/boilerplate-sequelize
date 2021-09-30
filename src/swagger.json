@@ -17,6 +17,9 @@
     "paths": {
       "/users": {
         "get": {
+          "security": [{
+            "jwt_token": []
+          }],
           "tags": ["users"],
           "description": "Obtener los usuarios del sistema",
           "responses": {
@@ -115,6 +118,14 @@
               "format": "+52(###)#######"
             }
           }
+        }
+      },
+      "securitySchemes": {
+        "jwt_token": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT",
+          "description": "Token de autorización"
         }
       }
     }

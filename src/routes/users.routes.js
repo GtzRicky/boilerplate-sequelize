@@ -8,6 +8,8 @@ const {
     deleteUser
 } = require("../controllers/users.controller");
 
+const { conversationsFromUser } = require("../controllers/conversations.controller");
+
 const { validateToken, restrictedMiddleware } = require("../middlewares/auth.middleware");
 
 const router = Router();
@@ -23,6 +25,6 @@ router.put("/users/:id", validateToken, restrictedMiddleware, updateUser);
 router.delete("/users/:id", validateToken, restrictedMiddleware, deleteUser);
 
 //Completar la siguiente ruta
-router.get("/users/:id/conversations");
+router.get("/users/:id/conversations", conversationsFromUser);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const { extractExpectedAssertionsErrors } = require("expect");
 const { conversations, users, participants, messages } = require("../models");
 
 class ConversationService {
@@ -25,6 +26,7 @@ class ConversationService {
     static async create(newConversation) {
         try {
             let result = await conversations.create(newConversation);
+            await participants.create({ conversation_id: conversation.id, user_id: conversation.created_by});
             return result;
         } catch (error) {
             throw error;
@@ -101,6 +103,33 @@ class ConversationService {
                 ]
             });
             return result
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static getConversationsFromUser(id) {
+        try {
+            const results = await conversations.findAll({include: [
+                { model: participants, as:  "participants", where: { user_id: id } }
+            ]});
+            return results;
+        }
+        catch (error) {
+            throw error;   
+        }
+    }
+
+    static async sendMessage(sender_id, conversation_id, message) {
+        const newMessage = {
+            sender_id,
+            conversation_id,
+            message
+        }
+
+        try {
+            let result = await messages.create(newMessage);
+            return result;
         } catch (error) {
             throw error;
         }
