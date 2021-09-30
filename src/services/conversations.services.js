@@ -108,7 +108,7 @@ class ConversationService {
         }
     }
 
-    static getConversationsFromUser(id) {
+    static async getConversationsFromUser(id) {
         try {
             const results = await conversations.findAll({include: [
                 { model: participants, as:  "participants", where: { user_id: id } }

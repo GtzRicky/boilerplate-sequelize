@@ -18,7 +18,7 @@ const router = Router();
 
 router.get("/conversations", validateToken, getAllConversations);
 
-router.get("/conversations/:id", validateToken, etConversationById);
+router.get("/conversations/:id", validateToken, getConversationById);
 
 router.post("/conversations", validateToken, createConversation);
 
