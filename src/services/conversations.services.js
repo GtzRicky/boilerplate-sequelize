@@ -119,7 +119,7 @@ class ConversationService {
             throw error;   
         }
     }
-
+    
     static async sendMessage(sender_id, conversation_id, message) {
         const newMessage = {
             sender_id,
