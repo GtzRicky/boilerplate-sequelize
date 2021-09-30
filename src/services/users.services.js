@@ -3,7 +3,11 @@ const { users } = require("../models");
 class UserService {
     static async getAll() {
         try {
-            let results = await users.findAll();
+            let results = await users.findAll({
+                attributes: {
+                    exclude: ["password"]
+                }
+            });
             return results;
         } catch (error) {
             throw error;
@@ -12,8 +16,15 @@ class UserService {
 
     static async getById(id) {
         try {
-            let result = await users.findByPk(id);
-            return result;
+            let result = await users.findByPk(id, {
+                attributes: {
+                    exclude: ["password"]
+                }
+            });
+            if(result) {
+                return result;
+            }
+            return {};
         } catch (error) {
             throw error;
         }
@@ -22,6 +33,8 @@ class UserService {
     static async create(newUser) {
         try {
             let result = await users.create(newUser);
+            result = JSON.parse(JSON.stringify(result));
+            delete result.password;
             return result;
         } catch (error) {
             throw error;
@@ -31,7 +44,10 @@ class UserService {
     static async update(updateUser, id) {
         try {
             let result = await users.update(updateUser, {where : {id}});
-            return result;
+            if(result[0] === 0){
+                return false;
+            }
+            return true;
         } catch (error) {
             throw error;
         }

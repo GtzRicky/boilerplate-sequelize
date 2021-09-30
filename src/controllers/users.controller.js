@@ -11,7 +11,7 @@ const getAllUsers = async (req, res, next) => {
 
 const getUserById = async (req, res, next) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const user = await UserService.getById(id);
         return res.json(user);
     } catch (error) {
@@ -33,7 +33,7 @@ const createUser = async (req, res, next) => {
         };
 
         const user = await UserService.create(newUser);
-        return res.json(user);
+        return res.status(201).json(user);
         
     } catch (error) {
         next(error);
@@ -55,7 +55,7 @@ const updateUser = async (req, res, next) => {
         };
 
         const user = await UserService.update(updatedUser, id);
-        if (user && user[0]) {
+        if (user) {
             return res.json({ message: "Se ha actualizado el registro en el sistema" });
         }
         return res.json({ message: "No se ha podido actualizar el registro en el sistema" });

@@ -8,16 +8,21 @@ const {
     deleteUser
 } = require("../controllers/users.controller");
 
+const { validateToken, restrictedMiddleware } = require("../middlewares/auth.middleware");
+
 const router = Router();
 
-router.get("/users", getAllUsers);
+router.get("/users", validateToken, getAllUsers);
 
-router.get("/users/:id", getUserById);
+router.get("/users/:id", validateToken, getUserById);
 
 router.post("/users", createUser);
 
-router.put("/users/:id", updateUser);
+router.put("/users/:id", validateToken, restrictedMiddleware, updateUser);
 
-router.delete("/users/:id", deleteUser);
+router.delete("/users/:id", validateToken, restrictedMiddleware, deleteUser);
+
+//Completar la siguiente ruta
+router.get("/users/:id/conversations");
 
 module.exports = router;

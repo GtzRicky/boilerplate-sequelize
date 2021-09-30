@@ -1,7 +1,8 @@
 const express = require('express');
 const userRoutes = require("./routes/users.routes");
 const conversationRoutes = require("./routes/conversations.routes");
-const authRoutes = require("./routes/auth.routes")
+const authRoutes = require("./routes/auth.routes");
+const middlewareError = require("./middlewares/error.middleware");
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
@@ -14,5 +15,6 @@ app.use(express.json());
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", conversationRoutes);
 app.use("/api/v1", authRoutes);
+app.use(middlewareError);
 
 module.exports = app;

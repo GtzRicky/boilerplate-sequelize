@@ -2,8 +2,8 @@ const ConversationService = require("../services/conversations.services");
 
 const getAllConversations = async (req, res, next) => {
     try {
-        const users = await ConversationService.getAll();
-        return res.json(users);
+        const conversations = await ConversationService.getAll();
+        return res.json(conversations);
     } catch (error) {
         next(error);
     }
@@ -11,9 +11,9 @@ const getAllConversations = async (req, res, next) => {
 
 const getConversationById = async (req, res, next) => {
     try {
-        const {id} = req.params;
-        const user = await ConversationService.getById(id);
-        return res.json(user);
+        const { id } = req.params;
+        const conversation = await ConversationService.getById(id);
+        return res.json(conversation);
     } catch (error) {
         next(error);
     }
@@ -30,9 +30,8 @@ const createConversation = async (req, res, next) => {
             created_by
         };
 
-        const user = await ConversationService.create(newConversation);
-        return res.json(user);
-        
+        const conversation = await ConversationService.create(newConversation);
+        return res.json(conversation);
     } catch (error) {
         next(error);
     }
@@ -50,8 +49,8 @@ const updateConversation = async (req, res, next) => {
             created_by
         };
 
-        const user = await ConversationService.update(updatedConversation, id);
-        if (user && user[0]) {
+        const conversation = await ConversationService.update(updatedConversation, id);
+        if (conversation && conversation[0]) {
             return res.json({ message: "Se ha actualizado el registro en el sistema" });
         }
         return res.json({ message: "No se ha podido actualizar el registro en el sistema" });

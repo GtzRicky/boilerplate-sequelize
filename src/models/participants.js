@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
 }
 
 class participants extends Sequelize.Model {
+  static associate(models){
+    participants.belongsTo(models.users, { as: "user", foreignKey: "user_id"});
+  }
+  
   static init(sequelize, DataTypes) {
   super.init({
     id: {
@@ -37,6 +41,10 @@ class participants extends Sequelize.Model {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: Sequelize.Sequelize.fn('now')
+    },
+    participants_id : {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: true
     }
   }, {
     sequelize,

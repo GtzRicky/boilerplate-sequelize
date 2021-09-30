@@ -13,7 +13,10 @@ class ConversationService {
     static async getById(id) {
         try {
             let result = await conversations.findByPk(id);
-            return result;
+            if(result){
+                return result;
+            }
+            return {};
         } catch (error) {
             throw error;
         }
@@ -70,7 +73,13 @@ class ConversationService {
                 include: [
                     {
                         model: participants,
-                        as: "participants"
+                        as: "participants",
+                        include: [
+                            {
+                                model: users,
+                                as: "user"
+                            }
+                        ]
                     }
                 ]
             });

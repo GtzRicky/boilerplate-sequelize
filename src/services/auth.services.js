@@ -6,17 +6,20 @@ class AuthService {
     static async login(email, password) {
         try {
             let result = await users.findOne({ where: {email}});
+
+            const error = new Error("Las credenciales son incorrectas");
+            error.name = "InvalidCredentials";
+            if(!result){
+                throw  error;
+            }
+
             const valid = bcrypt.compareSync(password, result.password);
             result = JSON.parse(JSON.stringify(result));
-            if(valid) {
-                return {
-                    valid: true,
-                    ...result
-                };
+            if(!valid) {
+                throw error
             }
-            return {
-                valid: false
-            }
+            const token = this.genToken(result);
+            return token;
         } catch (error) {
             throw error;
         }
