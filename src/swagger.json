@@ -10,7 +10,7 @@
         "description": "dev server"
       },
       {
-        "url": "https://miapp.com/api/v1",
+        "url": "https://academlo-wa-api.herokuapp.com/",
         "description": "prod server"
       }
     ],
