@@ -19,7 +19,10 @@ class AuthService {
                 throw error
             }
             const token = this.genToken(result);
-            return token;
+            return {
+                token,
+                user: result
+            };
         } catch (error) {
             throw error;
         }

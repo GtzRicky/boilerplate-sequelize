@@ -25,6 +25,6 @@ router.put("/users/:id", validateToken, restrictedMiddleware, updateUser);
 router.delete("/users/:id", validateToken, restrictedMiddleware, deleteUser);
 
 //Completar la siguiente ruta
-router.get("/users/:id/conversations", conversationsFromUser);
+router.get("/users/:id/conversations", validateToken, restrictedMiddleware, conversationsFromUser);
 
 module.exports = router;

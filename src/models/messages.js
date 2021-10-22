@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
 }
 
 class messages extends Sequelize.Model {
+  static associate(models) {
+    messages.belongsTo(models.users, { as: "sender", foreignKey: "sender_id"});
+  }
   static init(sequelize, DataTypes) {
   super.init({
     id: {

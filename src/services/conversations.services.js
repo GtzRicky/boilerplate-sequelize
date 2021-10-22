@@ -1,4 +1,3 @@
-const { extractExpectedAssertionsErrors } = require("expect");
 const { conversations, users, participants, messages } = require("../models");
 
 class ConversationService {
@@ -121,9 +120,14 @@ class ConversationService {
                 include: [
                     {
                         model: messages,
-                        as: "messages"
+                        as: "messages",
+                        include: {
+                            model: users,
+                            as: "sender"
+                        }
                     }
-                ]
+                ],
+                order: [['messages', 'id', 'asc']]
             });
             return result
         } catch (error) {

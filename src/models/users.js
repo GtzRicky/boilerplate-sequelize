@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 class users extends Sequelize.Model {
   static associate(models) {
     users.hasMany(models.participants, { as: "participants", foreignKey: "user_id" });
+    users.hasMany(models.messages, { as: "messages", foreignKey: "sender_id"});
   }
   static init(sequelize, DataTypes) {
   super.init({
@@ -59,7 +60,7 @@ class users extends Sequelize.Model {
     schema: 'public',
     hooks: {
       beforeCreate: (user, options) => {
-        // Cada vez que inserte un usuarui en la DB vamos a encriptar la contraseña
+        // Cada vez que inserte un usuario en la DB vamos a encriptar la contraseña
         const hash = bcrypt.hashSync(user.password, 8);
         user.password = hash;
       }
