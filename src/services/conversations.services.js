@@ -91,6 +91,29 @@ class ConversationService {
         }
     }
 
+    static async deleteParticipant(id) {
+        try {
+            let result = await conversations.destroy({
+                where: {id},
+                include: [
+                    {
+                        model: participants,
+                        as: "participants",
+                        include: [
+                            {
+                                model: users,
+                                as: "user"
+                            }
+                        ]
+                    }
+                ]
+            });
+            return result
+        } catch (error) {
+            throw(error)
+        }
+    }
+
     static async joinMessages(id) {
         try {
             let result = await conversations.findOne({

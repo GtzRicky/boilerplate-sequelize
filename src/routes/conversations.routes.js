@@ -8,6 +8,7 @@ const {
     deleteConversation,
     conversationUsers,
     conversationParticipants,
+    deleteConversationParticipant,
     conversationMessages,
     postMessage
 } = require("../controllers/conversations.controller");
@@ -32,7 +33,7 @@ router.get("/conversations/:id/users", validateToken, conversationUsers);
 
 router.get("/conversations/:id/participants", validateToken, conversationParticipants);
 
-router.delete("/conversations/:id/participants");
+router.delete("/conversations/:id/participants", validateToken, deleteConversationParticipant);
 
 router.get("/conversations/:id/messages", validateToken, conversationMessages);
 

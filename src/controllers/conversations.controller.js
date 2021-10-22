@@ -93,6 +93,16 @@ const conversationParticipants = async (req, res, next) => {
     }
 };
 
+const deleteConversationParticipant = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const conversation = await ConversationService.deleteParticipant(id);
+        return res.json(conversation);
+    } catch (error) {
+        next(error);
+    }
+};
+
 const conversationMessages = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -135,6 +145,7 @@ module.exports = {
     deleteConversation,
     conversationUsers,
     conversationParticipants,
+    deleteConversationParticipant,
     conversationMessages,
     conversationsFromUser,
     postMessage

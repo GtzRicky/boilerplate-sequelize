@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "Mi primera API",
+      "title": "WhatsUpp API",
       "version": "1.0.0"
     },
     "servers": [
@@ -15,6 +15,26 @@
       }
     ],
     "paths": {
+      "/auth/login": {
+        "post": {
+          "tags": ["auth"],
+          "description": "Inicio de sesión",
+          "responses": {
+            "200": {
+              "description": "Se ha iniciado sesión exitosamente"
+            }
+          },
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/auth"
+                }
+              }
+            }
+          }
+        }
+      },
       "/users": {
         "get": {
           "security": [{
@@ -48,7 +68,33 @@
         }
       },
       "/users/{id}": {
+        "get": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["users"],
+          "description": "Obtener un usuario específico",
+          "responses": {
+            "200": {
+              "description": "El usuario se ha obtenido satisfactoriamente"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "El ID del usuario a obtener",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ]
+        },
         "put": {
+          "security": [{
+            "jwt_token": []
+          }],
           "tags": ["users"],
           "description": "Actualizar un usuario en el sistema",
           "responses": {
@@ -61,7 +107,7 @@
               "name": "id",
               "in": "path",
               "required": true,
-              "description": "El id del usuario a actualizar",
+              "description": "El ID del usuario a actualizar",
               "schema": {
                 "type": "number"
               }
@@ -76,10 +122,61 @@
               }
             }
           }
+        },
+        "delete": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["users"],
+          "description": "Eliminar un usuario del sistema",
+          "responses": {
+            "200": {
+              "description": "Se ha eliminado correctamente el usuario"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "El ID del usuario a eliminar",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ]
+        }
+      },
+      "/users/{id}/conversations": {
+        "get": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["users"],
+          "description": "Obtener las conversasiones de un usuario",
+          "responses": {
+            "200": {
+              "description": "Obtener una lista de conversaciones del usuario"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID del usuario del que se obtendrán las conversaciones",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ]
         }
       },
       "/conversations": {
         "get": {
+          "security": [{
+            "jwt_token": []
+          }],
           "tags": ["conversations"],
           "description": "Obtener las conversaciones del sistema",
           "responses": {
@@ -87,11 +184,231 @@
               "description": "Obtener una lista de conversaciones"
             }
           }
+        },
+        "post": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["conversations"],
+          "description": "Crear una conversación nueva",
+          "responses": {
+            "201": {
+              "description": "Se ha creado la conversación satisfactoriamente"
+            }
+          },
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conversation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/conversations/{id}": {
+        "get": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["conversations"],
+          "description": "Obtener una conversación específica",
+          "responses": {
+            "200": {
+              "description": "Se ha obtenido la conversación satisfactoriamente"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID de la conversacion",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ]
+        },
+        "put": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["conversations"],
+          "description": "Actualizar una conversación",
+          "responses": {
+            "200": {
+              "description": "Se ha actualizado la conversación exitosamente"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID de la conversacion a actualizar",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conversation"
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["conversations"],
+          "description": "Eliminar una conversación",
+          "responses": {
+            "200": {
+              "description": "Se ha eliminado la conversación exitosamente"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID de la conversacion a eliminar",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ]
+        }
+      },
+      "/conversations/{id}/users": {
+        "get": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["conversations"],
+          "description": "Obtener usuarios dentro de una conversación",
+          "responses": {
+            "200": {
+              "description": "Se han obtenido los usuarios de la conversación exitosamente"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID de la conversación",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ]
+        }
+      },
+      "/conversations/{id}/messages": {
+        "get": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["conversations"],
+          "description": "Obtener mensajes de una conversación",
+          "responses": {
+            "200": {
+              "description": "Se han obtenido los mensajes de la conversación exitosamente"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID de la conversación",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ]
+        },
+        "post": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["conversations"],
+          "description": "Crear un mensaje dentro de una conversación",
+          "responses": {
+            "201": {
+              "description": "El mensaje se ha creado exitosamente"
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID de la conversación",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/messages/{id}": {
+        "delete": {
+          "security": [{
+            "jwt_token": []
+          }],
+          "tags": ["messages"],
+          "description": "Eliminar mensaje dentro de una conversación",
+          "responses": {
+            "200": {
+              "description": "Se ha eliminado el mensaje exitosamente"
+            }
+          },
+          "parameters": [
+            {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "ID del mensaje",
+                "schema": {
+                  "type": "number"
+                }
+            }
+          ]
         }
       }
     },
     "components": {
       "schemas": {
+        "auth": {
+          "type": "object",
+          "required": ["email", "password"],
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
         "user": {
           "type": "object",
           "required": ["firstname", "lastname", "email", "password", "phone"],
@@ -116,6 +433,42 @@
             "phone": {
               "type": "string",
               "format": "+52(###)#######"
+            }
+          }
+        },
+        "conversation": {
+          "type": "object",
+          "required": ["title"],
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Título de la conversación"
+            },
+            "created_by": {
+              "type": "number",
+              "description": "ID del usuario que crea la conversación"
+            },
+            "type": {
+              "type": "string",
+              "description": "Tipo de conversación",
+              "example": "one_to_one / group"
+            }
+          }
+        },
+        "message": {
+          "type": "object",
+          "required": ["message"],
+          "properties": {
+            "sender_id": {
+              "type": "number",
+              "description": "ID del usuario que envía el mensaje"
+            },
+            "conversation_id": {
+              "type": "number",
+              "description": "ID de la conversación en que se enviará el mensaje"
+            },
+            "message": {
+              "type": "string"
             }
           }
         }
